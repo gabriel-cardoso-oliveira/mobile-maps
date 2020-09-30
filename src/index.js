@@ -10,11 +10,12 @@ import React from 'react';
 import { PersistGate } from 'redux-persist/integration/react';
 import { Provider } from 'react-redux';
 import { StatusBar } from 'react-native';
+import CodePush from 'react-native-code-push';
 import './config/ReactotronConfig';
 import { store, persistor } from './store';
 import Routes from './routes';
 
-export default function Index() {
+const Index = () => {
   // const [fontsLoaded] = useFonts({
   //   Roboto_400Regular,
   //   Roboto_500Medium,
@@ -35,4 +36,8 @@ export default function Index() {
       </PersistGate>
     </Provider>
   );
-}
+};
+
+export default CodePush({
+  checkFrequency: CodePush.CheckFrequency.ON_APP_RESUME,
+})(Index);
