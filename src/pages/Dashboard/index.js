@@ -31,8 +31,10 @@ export default function Dashboard(isActive) {
       fastestInterval: 120000,
       activitiesInterval: 10000,
       stopOnStillActivity: false,
-      url: 'http://10.0.2.2:3001/locations',
-      syncUrl: 'http://10.0.2.2:3001/sync',
+      url: 'https://quantum-balm-274511.uc.r.appspot.com/locations',
+      syncUrl: 'https://quantum-balm-274511.uc.r.appspot.com/sync',
+      // url: 'http://10.0.2.2:3001/locations',
+      // syncUrl: 'http://10.0.2.2:3001/sync',
       syncThreshold: 50,
       httpHeaders: {
         'X-FOO': 'bar',
