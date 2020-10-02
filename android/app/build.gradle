@@ -7,7 +7,9 @@ buildscript {
   }
 }
 
-apply plugin: 'com.onesignal.androidsdk.onesignal-gradle-plugin'
+// apply plugin: 'com.onesignal.androidsdk.onesignal-gradle-plugin'
+apply plugin: 'com.google.gms.google-services'
+com.google.gms.googleservices.GoogleServicesPlugin.config.disableVersionCheck = true
 
 apply plugin: "com.android.application"
 // apply from: '../../node_modules/react-native-unimodules/gradle.groovy'
@@ -172,7 +174,7 @@ android {
         releaseStaging {
           buildConfigField "String", "CODEPUSH_KEY", '"RyZ1L4UfTiOUWK-59XYrDj9Mk_ShlAIXoPQXO"'
 
-          matchingFallbacks = ['debug', 'release']
+          matchingFallbacks = ['release', 'debug']
         }
 
         release {
@@ -206,6 +208,13 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
 
     compile project(':@mauron85_react-native-background-geolocation')
+    compile project(':react-native-code-push')
+
+    implementation project(':@mauron85_react-native-background-geolocation')
+    implementation project(':react-native-onesignal')
+
+    implementation "com.google.android.gms:play-services-base:16.1.0"
+    implementation "com.google.android.gms:play-services-location:15.0.1"
 
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
