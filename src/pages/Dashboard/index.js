@@ -20,7 +20,8 @@ export default function Dashboard(isActive) {
     BackgroundGeolocation.configure({
       desiredAccuracy: BackgroundGeolocation.LOW_ACCURACY,
       stationaryRadius: 50,
-      distanceFilter: 100,
+      distanceFilter: 150,
+      debug: true,
       notificationTitle: 'CampoTV Maps',
       notificationText: 'Ativado',
       startOnBoot: false,
