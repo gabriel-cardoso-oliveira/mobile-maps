@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { Alert, Image } from 'react-native';
 import BackgroundGeolocation from '@mauron85/react-native-background-geolocation';
+import { useSelector } from 'react-redux';
 // import io from 'socket.io-client';
 import Background from '~/components/Background';
 import { Container, Description, Title } from './styles';
@@ -10,6 +11,7 @@ import logo from '~/assets/logo.png';
 // import { getDistanceFromLatLonInKm } from '../utils/getDistance';
 
 export default function Dashboard(isActive) {
+  const profile = useSelector((state) => state.user.profile);
   const [locations, setLocations] = useState(defaultLocation);
 
   useEffect(() => {
@@ -21,7 +23,7 @@ export default function Dashboard(isActive) {
       desiredAccuracy: BackgroundGeolocation.LOW_ACCURACY,
       stationaryRadius: 50,
       distanceFilter: 150,
-      debug: true,
+      // debug: true,
       notificationTitle: 'CampoTV Maps',
       notificationText: 'Ativado',
       startOnBoot: false,
@@ -45,6 +47,8 @@ export default function Dashboard(isActive) {
         lat: '@latitude',
         lon: '@longitude',
         foo: 'bar',
+        name: profile.name,
+        email: profile.email,
       },
     });
 
@@ -61,9 +65,9 @@ export default function Dashboard(isActive) {
       });
     });
 
-    BackgroundGeolocation.on('stationary', (/* stationaryLocation */) => {
-      // handle stationary locations here
-    });
+    // BackgroundGeolocation.on('stationary', (/* stationaryLocation */) => {
+    //   // handle stationary locations here
+    // });
 
     // BackgroundGeolocation.on('error', (error) => {
     //   console.tron.log('[ERROR] BackgroundGeolocation error:', error);
@@ -123,6 +127,7 @@ export default function Dashboard(isActive) {
       // console.tron.log('Removing all listeners');
       BackgroundGeolocation.removeAllListeners();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [locations, isActive]);
 
   return (
