@@ -49,7 +49,7 @@ export default function Dashboard(isActive) {
     });
 
     BackgroundGeolocation.on('location', (location) => {
-      console.tron.log('loc', location);
+      // console.tron.log('loc', location);
       setLocations((prev) => ({
         ...prev,
         latitude: location.latitude,
@@ -65,22 +65,22 @@ export default function Dashboard(isActive) {
       // handle stationary locations here
     });
 
-    BackgroundGeolocation.on('error', (error) => {
-      console.tron.log('[ERROR] BackgroundGeolocation error:', error);
-    });
+    // BackgroundGeolocation.on('error', (error) => {
+    //   console.tron.log('[ERROR] BackgroundGeolocation error:', error);
+    // });
 
-    BackgroundGeolocation.on('start', () => {
-      console.tron.log('[INFO] BackgroundGeolocation service has been started');
-    });
+    // BackgroundGeolocation.on('start', () => {
+    //   console.tron.log('[INFO] BackgroundGeolocation service has been started');
+    // });
 
-    BackgroundGeolocation.on('stop', () => {
-      console.tron.log('[INFO] BackgroundGeolocation service has been stopped');
-    });
+    // BackgroundGeolocation.on('stop', () => {
+    //   console.tron.log('[INFO] BackgroundGeolocation service has been stopped');
+    // });
 
     BackgroundGeolocation.on('authorization', (status) => {
-      console.tron.log(
-        `[INFO] BackgroundGeolocation authorization status: ${status}`
-      );
+      // console.tron.log(
+      //   `[INFO] BackgroundGeolocation authorization status: ${status}`
+      // );
       if (status !== BackgroundGeolocation.AUTHORIZED) {
         // we need to set delay or otherwise alert may not be shown
         setTimeout(
@@ -95,7 +95,7 @@ export default function Dashboard(isActive) {
                 },
                 {
                   text: 'Não',
-                  onPress: () => console.tron.log('No Pressed'),
+                  onPress: () => {},
                   style: 'cancel',
                 },
               ]
@@ -105,13 +105,13 @@ export default function Dashboard(isActive) {
       }
     });
 
-    BackgroundGeolocation.on('background', () => {
-      console.tron.log('[INFO] App is in background');
-    });
+    // BackgroundGeolocation.on('background', () => {
+    //   console.tron.log('[INFO] App is in background');
+    // });
 
-    BackgroundGeolocation.on('foreground', () => {
-      console.tron.log('[INFO] App is in foreground');
-    });
+    // BackgroundGeolocation.on('foreground', () => {
+    //   console.tron.log('[INFO] App is in foreground');
+    // });
 
     BackgroundGeolocation.checkStatus((status) => {
       if (!status.isRunning) {
@@ -120,7 +120,7 @@ export default function Dashboard(isActive) {
     });
 
     return () => {
-      console.tron.log('Removing all listeners');
+      // console.tron.log('Removing all listeners');
       BackgroundGeolocation.removeAllListeners();
     };
   }, [locations, isActive]);
