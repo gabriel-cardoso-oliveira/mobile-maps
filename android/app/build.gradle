@@ -214,6 +214,7 @@ dependencies {
     implementation project(':react-native-onesignal')
 
     implementation "com.google.android.gms:play-services-base:16.1.0"
+    implementation "com.google.android.gms:play-services-gcm:15.0.1"
     implementation "com.google.android.gms:play-services-location:15.0.1"
 
     //noinspection GradleDynamicVersion
