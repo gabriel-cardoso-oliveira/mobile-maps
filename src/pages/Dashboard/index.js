@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { Alert, Image } from 'react-native';
 import BackgroundGeolocation from '@mauron85/react-native-background-geolocation';
+import { useSelector } from 'react-redux';
 // import io from 'socket.io-client';
 import Background from '~/components/Background';
 import { Container, Description, Title } from './styles';
@@ -10,6 +11,7 @@ import logo from '~/assets/logo.png';
 // import { getDistanceFromLatLonInKm } from '../utils/getDistance';
 
 export default function Dashboard(isActive) {
+  const profile = useSelector((state) => state.user.profile);
   const [locations, setLocations] = useState(defaultLocation);
 
   useEffect(() => {
@@ -20,7 +22,8 @@ export default function Dashboard(isActive) {
     BackgroundGeolocation.configure({
       desiredAccuracy: BackgroundGeolocation.LOW_ACCURACY,
       stationaryRadius: 50,
-      distanceFilter: 100,
+      distanceFilter: 150,
+      // debug: true,
       notificationTitle: 'CampoTV Maps',
       notificationText: 'Ativado',
       startOnBoot: false,
@@ -33,8 +36,8 @@ export default function Dashboard(isActive) {
       stopOnStillActivity: false,
       url: 'https://quantum-balm-274511.uc.r.appspot.com/locations',
       syncUrl: 'https://quantum-balm-274511.uc.r.appspot.com/sync',
-      // url: 'http://10.0.2.2:3001/locations',
-      // syncUrl: 'http://10.0.2.2:3001/sync',
+      // url: 'http://10.0.2.2:3333/locations',
+      // syncUrl: 'http://10.0.2.2:3333/sync',
       syncThreshold: 50,
       httpHeaders: {
         'X-FOO': 'bar',
@@ -44,11 +47,13 @@ export default function Dashboard(isActive) {
         lat: '@latitude',
         lon: '@longitude',
         foo: 'bar',
+        name: profile.name,
+        email: profile.email,
       },
     });
 
     BackgroundGeolocation.on('location', (location) => {
-      console.tron.log('loc', location);
+      // console.tron.log('loc', location);
       setLocations((prev) => ({
         ...prev,
         latitude: location.latitude,
@@ -60,26 +65,26 @@ export default function Dashboard(isActive) {
       });
     });
 
-    BackgroundGeolocation.on('stationary', (/* stationaryLocation */) => {
-      // handle stationary locations here
-    });
+    // BackgroundGeolocation.on('stationary', (/* stationaryLocation */) => {
+    //   // handle stationary locations here
+    // });
 
-    BackgroundGeolocation.on('error', (error) => {
-      console.tron.log('[ERROR] BackgroundGeolocation error:', error);
-    });
+    // BackgroundGeolocation.on('error', (error) => {
+    //   console.tron.log('[ERROR] BackgroundGeolocation error:', error);
+    // });
 
-    BackgroundGeolocation.on('start', () => {
-      console.tron.log('[INFO] BackgroundGeolocation service has been started');
-    });
+    // BackgroundGeolocation.on('start', () => {
+    //   console.tron.log('[INFO] BackgroundGeolocation service has been started');
+    // });
 
-    BackgroundGeolocation.on('stop', () => {
-      console.tron.log('[INFO] BackgroundGeolocation service has been stopped');
-    });
+    // BackgroundGeolocation.on('stop', () => {
+    //   console.tron.log('[INFO] BackgroundGeolocation service has been stopped');
+    // });
 
     BackgroundGeolocation.on('authorization', (status) => {
-      console.tron.log(
-        `[INFO] BackgroundGeolocation authorization status: ${status}`
-      );
+      // console.tron.log(
+      //   `[INFO] BackgroundGeolocation authorization status: ${status}`
+      // );
       if (status !== BackgroundGeolocation.AUTHORIZED) {
         // we need to set delay or otherwise alert may not be shown
         setTimeout(
@@ -94,7 +99,7 @@ export default function Dashboard(isActive) {
                 },
                 {
                   text: 'Não',
-                  onPress: () => console.tron.log('No Pressed'),
+                  onPress: () => {},
                   style: 'cancel',
                 },
               ]
@@ -104,13 +109,13 @@ export default function Dashboard(isActive) {
       }
     });
 
-    BackgroundGeolocation.on('background', () => {
-      console.tron.log('[INFO] App is in background');
-    });
+    // BackgroundGeolocation.on('background', () => {
+    //   console.tron.log('[INFO] App is in background');
+    // });
 
-    BackgroundGeolocation.on('foreground', () => {
-      console.tron.log('[INFO] App is in foreground');
-    });
+    // BackgroundGeolocation.on('foreground', () => {
+    //   console.tron.log('[INFO] App is in foreground');
+    // });
 
     BackgroundGeolocation.checkStatus((status) => {
       if (!status.isRunning) {
@@ -119,9 +124,10 @@ export default function Dashboard(isActive) {
     });
 
     return () => {
-      console.tron.log('Removing all listeners');
+      // console.tron.log('Removing all listeners');
       BackgroundGeolocation.removeAllListeners();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [locations, isActive]);
 
   return (
